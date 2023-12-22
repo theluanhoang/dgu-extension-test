@@ -25,9 +25,22 @@ jobs:
         run: npm ci
 
       - name: Run Tests and Capture Output
-        run: npm test -- --reporters=default --reporters=jest-junit > reports/test-results.xml || true
+        run: npm test 
 
-      
+      - name: Comment PR with Test Results
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        run: |
+          comment_body=$(cat reports/test-results.xml)
+          if [ -z "$comment_body" ]; then
+            comment_body="No test results found."
+          fi
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
 
 
 
