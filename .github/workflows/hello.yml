@@ -65,7 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          comment_body="Issue"
+          comment_body=$(cat test-results.txt)
           if [ -z "$comment_body" ]; then
             comment_body="No test results found."
           fi
