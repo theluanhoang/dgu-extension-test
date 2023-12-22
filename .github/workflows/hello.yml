@@ -35,7 +35,14 @@ jobs:
   
       - name: View Test Results
         run: cat reports/test-results.xml
-
+        
+      - name: Log Variables
+        run: |
+            echo "GITHUB_TOKEN: $GITHUB_TOKEN"
+            echo "comment_body: $comment_body"
+            echo "Repository: ${{ github.repository }}"
+            echo "PR Number: ${{ github.event.pull_request.number }}"
+             
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: always()
@@ -59,12 +66,6 @@ jobs:
     #          -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
     #          "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
 
-      - name: Log Variables
-        run: |
-           echo "GITHUB_TOKEN: $GITHUB_TOKEN"
-           echo "comment_body: $comment_body"
-           echo "Repository: ${{ github.repository }}"
-           echo "PR Number: ${{ github.event.pull_request.number }}"
 
 
 # name: REVIEW CODE EXTENSION PROJECT
