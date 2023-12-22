@@ -1,25 +1,25 @@
-name: Hello World
+name: REVIEW CODE EXTENSION PROJECT
 
 on:
-  push:
+  pull_request:
     branches:
-      - 'main'
+      - main
 
 jobs:
-  hello:
+  test:
     runs-on: ubuntu-latest
-
+  
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Add .env file
+        run: echo "${{ secrets.DEV_ENV }}" > .env
+
       - name: Setup Node
         uses: actions/setup-node@v3
-        with: 
-          node-version: '20'
-
-      - name: Create Reports Directory
-        run: mkdir -p reports
+        with:
+          node-version: '14'  # Sửa phiên bản Node.js thành phiên bản tương thích
 
       - name: Install Dependencies
         run: npm ci
@@ -27,22 +27,29 @@ jobs:
       - name: Run Tests and Capture Output
         run: npm test > reports/test-results.txt || true
 
-      - name: Test Report
-        uses: dorny/test-reporter@v1
+      - name: Comment PR with Test Results
         if: always()
-        with:
-          name: JEST Tests
-          path: reports/test-results.txt
-          reporter: jest-junit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          comment_body=$(cat reports/test-results.txt)
+          if [ -z "$comment_body" ]; then
+            comment_body="No test results found."
+          fi
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
 
 
-            # - name: Run tests
-            #   run: npm test 
-    
-            # - name: Test Report
-            #   uses: dorny/test-reporter@v1
-            #   if: success() || failure()    # run this step even if previous step failed
-            #   with:
-            #     name: JEST Tests            # Name of the check run which will be created
-            #     path: reports/jest-*.xml    # Path to test results
-            #     reporter: jest-junit
+        # - name: Run tests
+        #   run: npm test 
+
+        # - name: Test Report
+        #   uses: dorny/test-reporter@v1
+        #   if: success() || failure()    # run this step even if previous step failed
+        #   with:
+        #     name: JEST Tests            # Name of the check run which will be created
+        #     path: reports/jest-*.xml    # Path to test results
+        #     reporter: jest-junit
