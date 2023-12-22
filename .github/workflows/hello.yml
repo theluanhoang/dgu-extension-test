@@ -1,46 +1,65 @@
-name: REVIEW CODE EXTENSION PROJECT
+name: Hello World
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - 'main'
 
 jobs:
-  test:
+  hello:
     runs-on: ubuntu-latest
-  
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Add .env file
-        run: echo "${{ secrets.DEV_ENV }}" > .env
+      - name: Print Hello World
+        run: echo "Hello World"
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
 
-      - name: Install Dependencies
-        run: npm ci
+# name: REVIEW CODE EXTENSION PROJECT
 
-      - name: Run Tests and Capture Output
-        run: npm test 
+# on:
+#   pull_request:
+#     branches:
+#       - main
 
-      - name: Comment PR with Test Results
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-        run: |
-          comment_body="No test results found."
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+  
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
 
-          # Nếu có tệp kết quả kiểm thử, thì đọc nội dung vào biến comment_body
-          if [ -f reports/test-results.xml ]; then
-            comment_body=$(cat reports/test-results.xml)
-          fi
+#       - name: Add .env file
+#         run: echo "${{ secrets.DEV_ENV }}" > .env
 
-          curl -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
+#       - name: Setup Node
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '20'
+
+#       - name: Install Dependencies
+#         run: npm ci
+
+#       - name: Run Tests and Capture Output
+#         run: npm test 
+
+#       - name: Comment PR with Test Results
+#         if: always()
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+#         run: |
+#           comment_body="No test results found."
+
+#           # Nếu có tệp kết quả kiểm thử, thì đọc nội dung vào biến comment_body
+#           if [ -f reports/test-results.xml ]; then
+#             comment_body=$(cat reports/test-results.xml)
+#           fi
+
+#           curl -X POST \
+#             -H "Authorization: token $GITHUB_TOKEN" \
+#             -H "Accept: application/vnd.github.v3+json" \
+#             -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
+#             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
