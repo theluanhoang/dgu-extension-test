@@ -1,5 +1,8 @@
 name: Hello World
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 on:
   push:
     branches:
@@ -41,7 +44,7 @@ jobs:
             echo "GITHUB_TOKEN: $GITHUB_TOKEN"
             echo "comment_body: $comment_body"
             echo "Repository: ${{ github.repository }}"
-            echo "PR Number: ${{ github.event.pull_request.number }}"
+            echo "PR Number: ${{ github.pull_request.number }}"
              
       - name: Test Report
         uses: dorny/test-reporter@v1
