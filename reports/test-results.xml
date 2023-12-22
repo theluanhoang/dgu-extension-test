@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="5" failures="1" errors="0" time="3.942">
+  <testsuite name="UsageService" errors="0" failures="1" skipped="0" timestamp="2023-12-22T13:22:52" time="3.725" tests="5">
+    <testcase classname="UsageService UsageService.createApiKey Successfully creates an API key" name="UsageService UsageService.createApiKey Successfully creates an API key" time="0.003">
+      <failure>Error: secretOrPrivateKey must have a value
+    at Object.sign (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jsonwebtoken\sign.js:111:20)
+    at createApiKey (D:\code\Training\DGU-EXTENSION-TEST\src\helpers\createApiKey.helper.ts:6:24)
+    at UsageService.&lt;anonymous&gt; (D:\code\Training\DGU-EXTENSION-TEST\src\services\usage.service.ts:8:51)
+    at Generator.next (&lt;anonymous&gt;)
+    at D:\code\Training\DGU-EXTENSION-TEST\src\services\usage.service.ts:1419:40
+    at new Promise (&lt;anonymous&gt;)
+    at __awaiter (D:\code\Training\DGU-EXTENSION-TEST\src\services\usage.service.ts:1368:10)
+    at UsageService.createApiKey (D:\code\Training\DGU-EXTENSION-TEST\src\services\usage.service.ts:7:71)
+    at D:\code\Training\DGU-EXTENSION-TEST\tests\usages\usageService.test.ts:34:60
+    at Generator.next (&lt;anonymous&gt;)
+    at D:\code\Training\DGU-EXTENSION-TEST\tests\usages\usageService.test.ts:8:71
+    at new Promise (&lt;anonymous&gt;)
+    at Object.&lt;anonymous&gt;.__awaiter (D:\code\Training\DGU-EXTENSION-TEST\tests\usages\usageService.test.ts:4:12)
+    at Object.&lt;anonymous&gt; (D:\code\Training\DGU-EXTENSION-TEST\tests\usages\usageService.test.ts:33:58)
+    at Promise.then.completed (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\utils.js:300:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\utils.js:233:10)
+    at _callCircusTest (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\run.js:315:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async _runTest (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\run.js:251:3)
+    at async _runTestsForDescribeBlock (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\run.js:125:9)
+    at async _runTestsForDescribeBlock (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\run.js:120:9)
+    at async _runTestsForDescribeBlock (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\run.js:120:9)
+    at async run (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\run.js:70:3)
+    at async runAndTransformResultsToJestFormat (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at async jestAdapter (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at async runTestInternal (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-runner\build\runTest.js:367:16)
+    at async runTest (D:\code\Training\DGU-EXTENSION-TEST\node_modules\jest-runner\build\runTest.js:444:34)</failure>
+    </testcase>
+    <testcase classname="UsageService UsageService.getApiKey Successfully retrieves API keys" name="UsageService UsageService.getApiKey Successfully retrieves API keys" time="0.008">
+    </testcase>
+    <testcase classname="UsageService UsageService.deleteApiKey Successfully deletes an API key" name="UsageService UsageService.deleteApiKey Successfully deletes an API key" time="0.001">
+    </testcase>
+    <testcase classname="UsageService UsageService.deleteApiKey Throws an error when delete operation fails" name="UsageService UsageService.deleteApiKey Throws an error when delete operation fails" time="0.002">
+    </testcase>
+    <testcase classname="UsageService UsageService.getCash Successfully retrieves cash amount" name="UsageService UsageService.getCash Successfully retrieves cash amount" time="0.002">
+    </testcase>
+  </testsuite>
+</testsuites>
