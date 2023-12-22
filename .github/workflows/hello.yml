@@ -30,22 +30,22 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-    #   - name: Create Reports Directory
-    #     run: mkdir -p reports
+      - name: Create Reports Directory
+        run: mkdir -p reports
   
-    #   - name: Run Tests and Capture Output
-    #     run: npm test -- --reporters=default --reporters=jest-junit > reports/test-results.xml || true
+      - name: Run Tests and Capture Output
+        run: npm test -- --reporters=default --reporters=jest-junit > reports/test-results.xml || true
         
-    #   - name: Test Report
-    #     uses: dorny/test-reporter@v1
-    #     if: always()
-    #     with:
-    #       name: JEST Tests
-    #       path: reports/test-results.xml
-    #       reporter: jest-junit
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: JEST Tests
+          path: reports/test-results.xml
+          reporter: jest-junit
             
-    #   - name: View Test Results
-    #     run: cat reports/test-results.xml
+      - name: View Test Results
+        run: cat reports/test-results.xml
         
       - name: Log Variables
         run: |
@@ -54,18 +54,18 @@ jobs:
           echo "Repository: ${{ github.repository }}"
           echo "PR Number: ${{ github.event.pull_request.number }}"
             
-      - name: Run Tests and Capture Output
-        run: npm test > test-results.txt || true
+    #   - name: Run Tests and Capture Output
+    #     run: npm test > test-results.txt || true
 
-      - name: View Test Results
-        run: cat test-results.txt
+    #   - name: View Test Results
+    #     run: cat test-results.txt
     
       - name: Comment PR with Test Results
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          comment_body=$(cat test-results.txt)
+          comment_body=$(cat reports/test-results.xml)
           if [ -z "$comment_body" ]; then
             comment_body="No test results found."
           fi
@@ -73,7 +73,7 @@ jobs:
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments"
+            "https://api.github.com/repos/${{ github.repository }}/issues/1/comments"
 
 
 
