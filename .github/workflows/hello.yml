@@ -56,6 +56,9 @@ jobs:
             
       - name: Run Tests and Capture Output
         run: npm test > test-results.txt || true
+
+      - name: View Test Results
+        run: cat test-results.txt
     
       - name: Comment PR with Test Results
         if: always()
