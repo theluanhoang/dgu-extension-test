@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Run Tests and Capture Output
-        run: npm test > reports/test-results.txt || true
+        run: npm test -- --reporters=default --reporters=jest-junit > reports/test-results.xml || true
 
       - name: Comment PR with Test Results
         if: always()
