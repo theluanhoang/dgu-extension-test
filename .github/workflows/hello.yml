@@ -18,23 +18,31 @@ jobs:
         with: 
           node-version: '20'
 
+      - name: Create Reports Directory
+        run: mkdir -p reports
+
       - name: Install Dependencies
         run: npm ci
 
       - name: Run Tests and Capture Output
-        run: npm test > test-results.txt || true
+        run: npm test > reports/test-results.txt || true
 
-      - name: Comment PR with Test Results
+      - name: Test Report
+        uses: dorny/test-reporter@v1
         if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          comment_body=$(cat test-results.txt)
-          if [ -z "$comment_body" ]; then
-            comment_body="No test results found."
-          fi
-          curl -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
+        with:
+          name: JEST Tests
+          path: reports/test-results.txt
+          reporter: jest-junit
+
+
+            # - name: Run tests
+            #   run: npm test 
+    
+            # - name: Test Report
+            #   uses: dorny/test-reporter@v1
+            #   if: success() || failure()    # run this step even if previous step failed
+            #   with:
+            #     name: JEST Tests            # Name of the check run which will be created
+            #     path: reports/jest-*.xml    # Path to test results
+            #     reporter: jest-junit
