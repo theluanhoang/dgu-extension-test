@@ -30,7 +30,7 @@ jobs:
       - name: Comment PR with Test Results
         if: always()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         run: |
           comment_body=$(cat reports/test-results.xml)
           if [ -z "$comment_body" ]; then
