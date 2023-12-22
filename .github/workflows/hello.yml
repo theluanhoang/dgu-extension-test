@@ -5,18 +5,30 @@ on:
     branches:
       - 'main'
 
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
 jobs:
-  report:
-    name: Workflow test
+  build-test:
+    name: Build & Test
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./
+      - uses: actions/checkout@v3  # Checkout the repository
+      - run: npm ci                # Install packages
+      - run: npm test              # Run tests (configured to use jest-junit reporter)
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()  # Run this step even if the previous step failed
         with:
-          artifact: test-results
-          name: Workflow Report
-          path: '*.xml'
+          name: JEST Tests           # Name of the check run to be created
+          path: reports/jest-*.xml   # Path to test results
           reporter: jest-junit
+
+      
 
 # name: Hello World
 
