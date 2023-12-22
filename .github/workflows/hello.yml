@@ -50,6 +50,7 @@ jobs:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
            comment_body=$(cat reports/test-results.xml)
+           echo $GITHUB_TOKEN
            if [ -z "$comment_body" ]; then
              comment_body="No test results found."
            fi
