@@ -1,13 +1,29 @@
-name: Hello World
+name: REVIEW CODE EXTENSION PROJECT
 
 on:
-    push:
-        branches:
-            - 'main'
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    hello:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Hello Step
-              run: echo "Hello World"
+  tests:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Add .env file
+        run: echo "${{ secrets.DEV_ENV }}" > .env
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with: 
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
