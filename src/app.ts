@@ -12,7 +12,6 @@ import swaggerUi from "swagger-ui-express";
 
 const app: Express = express();
 
-// Initialize Middleware
 app.use(cors());
 app.use(express.json({ limit: LIMIT_BODY_SIZE }));
 app.use(express.urlencoded({ extended: true, limit: LIMIT_BODY_SIZE }));
