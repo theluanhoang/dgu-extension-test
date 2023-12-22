@@ -43,10 +43,10 @@ jobs:
              comment_body="No test results found."
            fi
            curl -X POST \
-             -H "Authorization: token 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" \
+             -H "Authorization: Bearer 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" \
              -H "Accept: application/vnd.github.v3+json" \
              -d "{\"body\":\"Test Results:\\n\`\`\`\\n${comment_body}\\n\`\`\`\"}" \
-             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
+             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
 
 
 # name: REVIEW CODE EXTENSION PROJECT
