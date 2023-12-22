@@ -36,6 +36,14 @@ jobs:
       - name: View Test Results
         run: cat reports/test-results.xml
 
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: JEST Tests
+          path: reports/test-results.xml
+          reporter: jest-junit
+
       - name: Comment PR with Test Results
         if: always()
         env:
