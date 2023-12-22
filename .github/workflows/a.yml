@@ -34,10 +34,10 @@ jobs:
         run: mkdir -p reports
   
       - name: Run Tests and Capture Output
-        run: npm test -- --reporters=default --reporters=jest-junit > reports/test-results.xml || true
+        run: npm test -- --reporters=default --reporters=jest-junit > reports/jest-junit.xml || true
 
       - name: View Test Results
-        run: cat reports/test-results.xml
+        run: cat reports/jest-junit.xml
 
       - name: Comment PR with Test Results
         if: always()

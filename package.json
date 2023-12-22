@@ -68,15 +68,5 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-themes": "^1.2.30",
     "swagger-ui-express": "^5.0.0"
-  },
-  "jest-junit": {
-    "suiteName": "jest tests",
-    "outputDirectory": "../../__tests__/fixtures",
-    "outputName": "jest-junit.xml",
-    "ancestorSeparator": " › ",
-    "uniqueOutputName": "false",
-    "suiteNameTemplate": "{filepath}",
-    "classNameTemplate": "{classname}",
-    "titleTemplate": "{title}"
   }
 }
