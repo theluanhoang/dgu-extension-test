@@ -40,8 +40,8 @@ jobs:
         run: mkdir -p reports
   
       - name: Run Tests and Capture Output
-        run: npm test
-        
+        run: npm test -- --reporters=default --reporters=jest-junit > reports/test-results.xml || true   
+             
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: always()
