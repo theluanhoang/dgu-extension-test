@@ -38,12 +38,9 @@ jobs:
 
       - name: Create Reports Directory
         run: mkdir -p reports
-  
+
       - name: Run Tests and Capture Output
-        run: npx jest --reporters=default --reporters=jest-junit | tee reports/test-results.xml
-    
-      - name: DEBUG
-        run: cat reports/test-results.xml
+        run: npx jest --config=jest.config.ts
 
       - name: Test Report
         uses: dorny/test-reporter@v1
