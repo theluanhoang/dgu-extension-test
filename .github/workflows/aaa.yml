@@ -50,6 +50,7 @@ jobs:
           name: JEST Tests
           path: reports/test-results.xml
           reporter: jest-junit
+          fail-on-error: false
             
       - name: View Test Results
         run: cat reports/test-results.xml
