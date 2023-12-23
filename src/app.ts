@@ -20,7 +20,6 @@ app.use(compression());
 app.use(rateLimit(configRateLimit));
 
 // Connect Database
-import "@/database/init.mongo";
 
 // Initialize Routes
 app.use(router);
