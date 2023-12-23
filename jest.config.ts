@@ -9,7 +9,7 @@ const config: Config.InitialOptions = {
     testPathIgnorePatterns: ["/node_modules/", "<rootDir>/dist/"],
     collectCoverage: true,
     verbose: true,
-    reporters: ["default", ["jest-junit", { outputDirectory: "reports", outputName: "jest-junit.xml" }]],
+    reporters: ["default", ["jest-junit", { outputDirectory: "reports", outputName: "test-results.xml" }]],
 };
 
 export default config;
