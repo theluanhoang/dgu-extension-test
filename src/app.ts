@@ -19,13 +19,10 @@ app.use(helmet());
 app.use(compression());
 app.use(rateLimit(configRateLimit));
 
-// Connect Database
 import "@/database/init.mongo";
 
-// Initialize Routes
 app.use(router);
 
-// Initialize Swagger
 const swaggerDocs = swaggerJsdoc(configSwagger.swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs, configSwagger.optionsTheme));
 
