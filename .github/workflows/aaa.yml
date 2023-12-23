@@ -4,7 +4,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
-  pull_request:
+  push:
     branches:
       - 'main'
 
@@ -41,6 +41,9 @@ jobs:
   
       - name: Run Tests and Capture Output
         run: npm test -- --reporters=default --reporters=jest-junit > reports/test-results.xml || true
+
+      - name: DEBUG
+        run: cat reports/test-results.xml
 
       - name: Test Report
         uses: dorny/test-reporter@v1
