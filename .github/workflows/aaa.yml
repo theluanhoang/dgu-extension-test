@@ -7,10 +7,12 @@ on:
   push:
     branches:
       - 'main'
+
 permissions:
   contents: read
-  actions: read
+  issues: read
   checks: write
+  pull-requests: write
 
 jobs:
   hello:
@@ -48,16 +50,16 @@ jobs:
           path: reports/test-results.xml
           reporter: jest-junit
           fail-on-error: false
-            
-      - name: View Test Results
-        run: cat reports/test-results.xml
-        
-      - name: Log Variables
-        run: |
-          echo "GITHUB_TOKEN: $GITHUB_TOKEN"
-          echo "comment_body: $comment_body"
-          echo "Repository: ${{ github.repository }}"
-          echo "PR Number: ${{ github.event.pull_request.number }}"
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2
+        if: always()
+        with:
+          files: |
+            test-results.xml
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
 
       - name: Comment Check Run
         uses: actions/github-script@v7
@@ -84,20 +86,13 @@ jobs:
               issue_number: context.payload.pull_request.number,
               body: `Check the detailed test results [here](${checkRunOutput.summary})`,
             });
-        
-            
-    #   - name: Run Tests and Capture Output
-    #     run: npm test > test-results.txt || true
-
-    #   - name: View Test Results
-    #     run: cat test-results.txt
     
       - name: Comment PR with Test Results
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          comment_body=$(cat reports/test-results.xml)
+          comment_body="ISSUE"
           if [ -z "$comment_body" ]; then
             comment_body="No test results found."
           fi
