@@ -10,31 +10,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 14
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run tests
-      run: npm test
+      - name: Run tests
+        run: npm test
 
-    - name: Check if tests passed and comment on PR
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const { context, github } = require('@actions/github');
+      - name: Check if tests passed and comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { context, github } = require('@actions/github');
 
-          const status = process.exitCode === 0 ? 'passed' : 'failed';
-          const comment = `:white_check_mark: **Tests ${status}:** All tests have ${status}.`;
+            const status = process.exitCode === 0 ? 'passed' : 'failed';
+            const comment = `:white_check_mark: **Tests ${status}:** All tests have ${status}.`;
 
-          github.issues.createComment({
-            ...context.repo,
-            issue_number: context.payload.pull_request.number,
-            body: comment,
-          });
+            github.issues.createComment({
+              ...context.repo,
+              issue_number: context.payload.pull_request.number,
+              body: comment,
+            });
