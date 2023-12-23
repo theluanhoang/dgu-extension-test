@@ -55,6 +55,6 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action/composite@v2
         if: always()
         with:
-          comment_mode: on_failure
+          comment_mode: always
           files: |
             reports/test-results.xml
