@@ -40,8 +40,8 @@ jobs:
         run: mkdir -p reports
   
       - name: Run Tests and Capture Output
-        run: npx jest --reporters=default --reporters=jest-junit > reports/test-results.xml
-
+        run: npx jest --reporters=default --reporters=jest-junit | tee reports/test-results.xml
+    
       - name: DEBUG
         run: cat reports/test-results.xml
 
