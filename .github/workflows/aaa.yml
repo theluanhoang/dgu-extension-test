@@ -47,7 +47,7 @@ jobs:
         if: always()
         with:
           name: JEST Tests
-          path: reports/test-results.xml
+          path: reports/jest-junit.xml
           reporter: jest-junit
           fail-on-error: false
 
@@ -57,4 +57,4 @@ jobs:
         with:
           comment_mode: always
           files: |
-            reports/test-results.xml
+            reports/jest-junit.xml
